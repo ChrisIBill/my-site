@@ -1,0 +1,96 @@
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#Page {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100vh;
+    width:100vw;
+    margin: 0;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(236, 186, 9, 1) 100%, rgba(0, 212, 255, 1) 100%);
+}
+
+.Sidebar {
+    display: flex;
+
+    Sidebar-button {
+        color: green;
+    }
+}
+
+main {
+    padding: 10px;
+}
+
+#header {
+    height: 10rem;
+    width: 100%;
+    color: black;
+    background-color: aquamarine;
+    border: solid 2px black;
+    display: flex;
+    flex-direction: row;
+}
+
+#sidebar {
+    width: 22rem;
+    height: 100%;
+    color: blue;
+    background-color: #f7f7f7;
+    border: solid 2px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    ul {
+        justify-self: stretch;
+        list-style-type: none;
+    }
+    a {
+        text-decoration: none;
+        display: flex;
+        justify-self: stretch;
+        font-style: oblique;
+        height: 3rem;
+        border: solid 2px black;
+        margin-bottom: 1rem;
+        background-color: rgba(231, 170, 120, 0.74);
+    }
+    a:link, a:visited {
+        color: black;
+        font-size: 1.2rem;
+    }
+    /* a:hover {
+
+    }
+    a:active {
+
+    } */
+    nav {
+        display: flex;
+        flex-direction: column;
+    }
+    button {
+            height: 3rem;
+            width: 3rem;
+            position: relative;
+
+            align-self: flex-end;
+            color: #b2bac2;
+            background-color: green;
+            border: none;
+            cursor: pointer;
+            padding-left: 20px;
+        }
+}
+#sidebar:closed {
+    transition: width 0.3s ease-in-out;
+    width: 5rem;
+}
+

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Route, RouteObject } from "react-router-dom";
 import Root from "../Pages/Root";
 import ErrorPage from "../Pages/ErrorPage";
 import Contact from "../Pages/Contact";
@@ -30,39 +30,39 @@ export const navData = [
   },
 ];
 
+// export const Pages = createRoutesFromElements(
+//   <Route id="Home" path="/" element={<Home />} errorElement={<ErrorPage />}>
+//     <Route id="Calculator" path="Calculator" element={<Calculator />} />
+//     <Route id="Calculator" path="Calculator" element={<Calculator />} />
+//     <Route id="Settings" path="/Settings" element={<Settings />} />
+//   </Route>
+// )
+
+// export const Router2 = createBrowserRouter(Pages, {
+//   basename: "ErrorPage",
+// })
 export const Router = createBrowserRouter([
   {
     path: "/",
+    id: "0",
     element: <Home />,
     errorElement: <ErrorPage />,
     children: [
       {
         path: "About",
+        id: '1',
         element: <About />,
       },
       {
         path: "Calculator",
+        id: '2',
         element: <Calculator />,
       },
       {
         path: "Settings",
+        id: '3',
         element: <Settings />,
       },
-    ],
-  },
-]);
-
-export const Router2 = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "contacts/:contactId",
-        element: <Contact />,
-      },
-      {},
     ],
   },
 ]);

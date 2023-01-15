@@ -1,4 +1,5 @@
 import "./Home.scss";
+import Sidebar from "../Components/sidebar";
 import { Outlet, Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -10,7 +11,8 @@ export default function Home() {
   return (
     <div id="Page">
       <div id="header">Header</div>
-      <div id={open ? "sidebar" : "sidebar:closed"}>
+      <Sidebar />
+      {/* <div id={open ? "sidebar" : "sidebar:closed"}>
         <nav>
           <button id="menuButton" onClick={menuButtonClick}></button>
           <ul>
@@ -25,7 +27,7 @@ export default function Home() {
             </li>
           </ul>
         </nav>
-      </div>
+      </div> */}
       <div id="Content">
         <Outlet />
       </div>

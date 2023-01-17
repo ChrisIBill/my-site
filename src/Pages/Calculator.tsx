@@ -2,12 +2,85 @@ import "./calculator.scss";
 import { calcButtons } from "../lib/calcButtons";
 import { useState } from "react";
 import { isNumberObject } from "util/types";
-
+type Operand = (number | Equation) | null;
+type Operands = [Operand, Operand];
 type math = string | number;
 type maths = math[];
 type Equations = math | math[];
-const equation2: math[] = [7, '+', 8];
-const calculate = (values: number[], expr: string): number | undefined=> {
+
+class Equation {
+    nums: Operands = [null, null];
+    op: string = '';
+    constructor(nums: Operands, op: string) {
+        this.nums = nums;
+        this.op = op;
+    }
+
+    addToNums(num: (number | Equation)) {
+        console.log("Adding num: " + num)
+        console.log("To these nums: " + this.nums)
+        if (this.nums[0] === null) {
+            this.nums[0] = num;
+            return 0;
+        } else if (this.nums[1] === null) {
+            this.nums[1] = num;
+            return 1;
+        } else {
+            console.log("Equation.Nums is full" + this.nums[0] + " " + this.nums[1]);
+            return -1;
+        };
+    }
+    clear() {
+        this.nums = [null, null];
+        this.op = '';
+    }
+    /* Equate(eq: Equation) {
+        if (typeof this.nums[0] === 'object') {
+            console.log("Recursion");
+            Equate(this.nums[0] as Equation)
+        } else if (typeof this.nums[1] === 'object') {
+            console.log("Recursion");
+            Equate(this.nums[1] as Equation)
+        }
+        return calculate[this.op](this.nums[0] as number, this.nums[1] as number)
+    } */
+
+    
+}
+
+const Equate = (eq: Equation): number => {
+    let x = eq.nums[0]
+    let y = eq.nums[1]
+    if(typeof eq.nums[0] === 'object') {
+        console.log("Recursion");
+        x = Equate(eq.nums[0] as Equation)
+    } else if (typeof eq.nums[1] === 'object') {
+        console.log("Recursion");
+        y = Equate(eq.nums[1] as Equation)
+    }
+    return calculate[eq.op](eq.nums[0] as number, eq.nums[1] as number);
+}
+
+const printEquation = (eq: Equation) => {
+    console.log("nums0: " + eq.nums[0]);
+    console.log("nums1: " + eq.nums[1]);
+    const desc: string = "";
+    if (typeof eq.nums[0] === 'object') {
+        desc.concat(printEquation(eq.nums[0])) ;
+        
+    } else if (typeof eq.nums[1] === 'object') {
+        console.log("nums1: " + eq.nums[1]);
+        printEquation(eq.nums[1] as Equation)
+    } else return desc;
+}
+/* const Equation = () => {
+    const [nums, setNums] = useState<Operands>([null, null])
+    const [op, setOp] = useState("");
+
+} */
+
+//type operators = ['*', '/', '+', '-'];
+/* const calculate = (values: Operands, expr: string): number | undefined=> {
     switch (expr) {
         case "+":
             return values[0] + values[1];
@@ -24,31 +97,80 @@ const calculate = (values: number[], expr: string): number | undefined=> {
         default:
             return undefined;
     }
-}
+} */
 
-const convertDisp = (str: string) => {
-    const equation: math[] = [];
+const calculate: { [key: string]: (x: number, y: number) => number } = {
+    '*': (x, y) => x * y,
+    '/': (x, y) => x / y,
+    '+': (x, y) => x + y,
+    '-': (x, y) => x - y
+};
+
+const convertStrToMath = (str: string) => {
+    const equations: Equations[] = [];
     const prevNum: number = 0;
     for (let i = 0; i < str.length; i++) {
         const char: string = str[i];
         let num: number = Number(char);
         if (isNaN(num)) {
-            equation.push(char)
+            equations.push(char)
         } else if (prevNum) {
             num = prevNum * 10 + num;
-            equation.push(num);
-        }
+            equations.push(num);
+        } else equations.push(num);
     }
-    return parseDisp(equation, 0);
+    return convertMathToEquation(equations);
 }
 
-const parseDisp = (str: string, iter: number = 0): [(Equations)[], number] => {
+const convertMathToEquation = (equation: Equations[], iter: number = 0): [Equation, number] => {
+    const newEquation = new Equation([null, null], '')
+    const nums: number[] = [];
+    const ops: string[] = [];
+
+    for (; iter < equation.length; iter++) {
+        const elem = equation[iter];
+        if (typeof elem === 'number') {
+            console.log("here1")
+            newEquation.addToNums(elem);
+        } else if (typeof elem === 'string') {
+            if (elem === '(') {
+                let [parenth, i] = convertMathToEquation(equation.slice(iter + 1))
+                if (newEquation.addToNums(parenth) === -1) {
+                    console.log("Error: newEquation is full")
+                }
+                iter = iter + i;
+            } else if (elem === ')') {
+                return [newEquation, iter+1];
+            } else newEquation.op = elem;
+        }
+    }
+    return [newEquation, iter];
+    /* equation.forEach((elem, index) => {
+        if (typeof elem === 'number') {
+            newEquation.addToNums(elem);
+        } else if (typeof elem === 'string') {
+            if (elem === '(') {
+                let [parenth, i] = convertMathToEquation(equation.slice(index))
+            }
+            ops.push(elem);
+        }
+    }) */
+
+    /* while (ops) {
+        ops.indexOf('/')
+        ops.indexOf('+')
+        ops.indexOf('-')
+        if(ops.indexOf('*'))
+    } */
+}
+
+/* const parseDisp = (str: math[], iter: number = 0): [(Equations)[], number] => {
     //
     //const equation2: Array<math> = [];
     let equation: (Equations)[] = [];
     const newEquations: (Equations)[] = [];
     for (; iter < str.length; iter++) {
-        const char: string = str[iter];
+        const char: math = str[iter];
         const prevStr: number = Number(str[iter - 1]);
         console.log("Current Char in parse: " + char);
         const num: number = Number(char);
@@ -79,11 +201,12 @@ const parseDisp = (str: string, iter: number = 0): [(Equations)[], number] => {
     }
     console.log(equation);
     return [equation, iter];
-}
+} */
 
-const calcEquation = (equation: Equations[]) => {
+/* const calcEquations = (equation: Equations[]) => {
     const nums: number[] = [];
     const ops: string[] = [];
+    let calc = new Equation([null, null], '');
     for (let i = 0; i < equation.length; i++) {
         //console.log(equation[i]);
         let cur = equation[i]
@@ -93,12 +216,23 @@ const calcEquation = (equation: Equations[]) => {
             console.log("number")
         } else calcEquation(equation[i] as math[]);
     }
-}
-const printEquation = (eqs: Equations[]) => {
-    for (let i = 0; i < eqs.length; i++) {
 
-    }
-}
+    equation.forEach((elem, index) => {
+        if (typeof elem === 'object') {
+            
+        }
+        if (typeof elem === 'number') {
+            if (!calc.num1) {
+                calc.num1 = elem;
+            } else if (!calc.num2) {
+                calc.num2 = elem;
+            }
+        } else if (typeof elem === 'string') {
+            ops.push(elem);
+        }
+    })
+} */
+
 let nextId: number = 0;
 
 const CalcButtons = () => {
@@ -109,20 +243,12 @@ const CalcButtons = () => {
     function handleClick(op: string) {
         console.log("Calc button clicked: " + op)
         if (op === '=') {
-            let [equation, iter] = parseDisp(disp);
-            calcEquation(equation);
+            let [equation, iter] = convertStrToMath(disp);
+            printEquation(equation);
+            console.log("Equate: " + Equate(equation))
         } else {
             setDisp(disp + op)
         }
-        /* if (isNaN(Number(op))) {
-            setValues([
-                ...values,
-                num
-            ])
-            setOperation(op);
-        } else {
-            setNum(num + op)
-        } */
     }
 
     const Display = () => {

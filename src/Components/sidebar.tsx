@@ -13,7 +13,7 @@ export default function Sidebar() {
           <Link to={`/About`}>About Me</Link>
         </li>
         <li>
-          <Link to={`/Calculator`}>Calulator</Link>
+          <Link to={`/Calculator`}>Calculator</Link>
         </li>
         <li>
           <Link to={`/Settings`}>Settings</Link>

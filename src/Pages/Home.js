@@ -4,15 +4,15 @@ import { Outlet, Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function Home() {
-  const [open, setOpen] = useState(true);
-  const menuButtonClick = () => {
-    setOpen(!open);
-  };
-  return (
-    <div id="Page">
-      <div id="header">Header</div>
-      <Sidebar />
-      {/* <div id={open ? "sidebar" : "sidebar:closed"}>
+    const [open, setOpen] = useState(true);
+    const menuButtonClick = () => {
+        setOpen(!open);
+    };
+    return (
+        <div id="Page">
+            <div id="header">Header</div>
+            <Sidebar />
+            {/* <div id={open ? "sidebar" : "sidebar:closed"}>
         <nav>
           <button id="menuButton" onClick={menuButtonClick}></button>
           <ul>
@@ -28,9 +28,9 @@ export default function Home() {
           </ul>
         </nav>
       </div> */}
-      <div id="Content">
-        <Outlet />
-      </div>
-    </div>
-  );
+            <div id="content">
+                <Outlet />
+            </div>
+        </div>
+    );
 }

@@ -29,7 +29,7 @@ main {
 }
 
 #header {
-    height: 10rem;
+    height: 20%;
     width: 100%;
     color: black;
     background-color: aquamarine;
@@ -39,8 +39,8 @@ main {
 }
 
 #sidebar {
-    width: 22rem;
-    height: 100%;
+    width: 20%;
+    height: 80%;
     color: blue;
     background-color: #f7f7f7;
     border: solid 2px black;
@@ -103,4 +103,7 @@ main {
 
 #content {
     display: flex;
+    justify-content: center;
+    height: 79%;
+    width: 79%;
 }

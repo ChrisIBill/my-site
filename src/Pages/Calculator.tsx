@@ -45,33 +45,35 @@ class Equation {
         return calculate[this.op](this.nums[0] as number, this.nums[1] as number)
     } */
 
-    
+
 }
 
 const Equate = (eq: Equation): number => {
-    let x = eq.nums[0]
-    let y = eq.nums[1]
-    if(typeof eq.nums[0] === 'object') {
-        console.log("Recursion");
+    let x = eq.nums[0] as number
+    let y = eq.nums[1] as number
+    let op = eq.op
+    let ans: number;
+    if (typeof eq.nums[0] === 'object') {
         x = Equate(eq.nums[0] as Equation)
-    } else if (typeof eq.nums[1] === 'object') {
-        console.log("Recursion");
+    }
+    if (typeof eq.nums[1] === 'object') {
         y = Equate(eq.nums[1] as Equation)
     }
-    return calculate[eq.op](eq.nums[0] as number, eq.nums[1] as number);
+    ans = calculate[op](x, y);
+    /* console.log("Operating: " + eq.nums[0] + eq.op + eq.nums[1]);
+    console.log("Answer: " + ans); */
+    return ans;
 }
 
-const printEquation = (eq: Equation) => {
+const printEquation = (eq: Equation): string => {
     console.log("nums0: " + eq.nums[0]);
     console.log("nums1: " + eq.nums[1]);
-    const desc: string = "";
-    if (typeof eq.nums[0] === 'object') {
-        desc.concat(printEquation(eq.nums[0])) ;
-        
-    } else if (typeof eq.nums[1] === 'object') {
-        console.log("nums1: " + eq.nums[1]);
-        printEquation(eq.nums[1] as Equation)
-    } else return desc;
+    let desc: string = "";
+    (typeof eq.nums[0] === 'object') ? desc = desc.concat(printEquation(eq.nums[0] as Equation)) : desc = desc.concat(eq.nums[0] + " ");
+    desc = desc.concat(eq.op + " ");
+    (typeof eq.nums[1] === 'object') ? desc = desc.concat(printEquation(eq.nums[1] as Equation)) : desc = desc.concat(eq.nums[1] + " ");
+    console.log("Desc: " + desc);
+    return desc;
 }
 /* const Equation = () => {
     const [nums, setNums] = useState<Operands>([null, null])
@@ -140,7 +142,7 @@ const convertMathToEquation = (equation: Equations[], iter: number = 0): [Equati
                 }
                 iter = iter + i;
             } else if (elem === ')') {
-                return [newEquation, iter+1];
+                return [newEquation, iter + 1];
             } else newEquation.op = elem;
         }
     }
@@ -242,18 +244,23 @@ const CalcButtons = () => {
 
     function handleClick(op: string) {
         console.log("Calc button clicked: " + op)
-        if (op === '=') {
-            let [equation, iter] = convertStrToMath(disp);
-            printEquation(equation);
-            console.log("Equate: " + Equate(equation))
-        } else {
-            setDisp(disp + op)
+        switch (op) {
+            case '=':
+                let [equation, iter] = convertStrToMath(disp);
+                console.log("Equation: " + printEquation(equation));
+                console.log("Equate: " + Equate(equation))
+                setDisp(printEquation(equation) + " = " + Equate(equation));
+                break;
+            case 'clr':
+                setDisp('');
+                break;
+            default: setDisp(disp + op);
         }
     }
 
     const Display = () => {
-    //const calcValue: number | undefined = calculate();
-        return <div className="display">{ disp }</div>;
+        //const calcValue: number | undefined = calculate();
+        return <div className="display">{disp}</div>;
     };
 
     return (

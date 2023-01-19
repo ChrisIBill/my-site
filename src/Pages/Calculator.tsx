@@ -7,13 +7,18 @@ type Operands = [Operand, Operand];
 type math = string | number;
 type maths = math[];
 type Equations = math | math[];
-
+type operator = '^' | '*' | '/' | '+' | '-' | undefined;
 class Equation {
     nums: Operands = [null, null];
     op: string = '';
     constructor(nums: Operands, op: string) {
         this.nums = nums;
         this.op = op;
+    }
+    //if new operator greater than 
+
+    addToEquation(num: (number | Equation), op?: operator) {
+
     }
 
     addToNums(num: (number | Equation)) {
@@ -81,7 +86,7 @@ const printEquation = (eq: Equation): string => {
 
 } */
 
-//type operators = ['*', '/', '+', '-'];
+//
 /* const calculate = (values: Operands, expr: string): number | undefined=> {
     switch (expr) {
         case "+":
@@ -108,30 +113,112 @@ const calculate: { [key: string]: (x: number, y: number) => number } = {
     '-': (x, y) => x - y
 };
 
+const precedence = (op: string) =>{
+    switch (op) {
+        case '^':
+            return 3;
+        case '*':
+        case '/':
+            return 2;
+        case '+':
+        case '-':
+            return 1;
+        default:
+            return -1;
+    }
+}
+
+
+
 const convertStrToMath = (str: string) => {
-    const equations: Equations[] = [];
-    const prevNum: number = 0;
+    const equations: math[] = [];
+    let prevNum: number = 0;
     for (let i = 0; i < str.length; i++) {
         const char: string = str[i];
         let num: number = Number(char);
         if (isNaN(num)) {
             equations.push(char)
+            prevNum = 0;
         } else if (prevNum) {
             num = prevNum * 10 + num;
+            prevNum = num;
+            equations.pop();
             equations.push(num);
-        } else equations.push(num);
+        } else {
+            prevNum = num;
+            equations.push(num);
+        }
     }
-    return convertMathToEquation(equations);
+    return equations;
+    //return convertMathToEquation(equations);
+}
+
+const convertInfixToPostfix = (expression: math[]) => {
+    const postfixStack = [''];
+    const postfixExpression: math[] = [];
+    let stackElem;
+    for (let i = 0; i < expression.length; i++) {
+        const elem = expression[i];
+        if (typeof elem === 'number') {
+            postfixExpression.push(elem);
+        } else if (elem === '(') {
+            postfixStack.push('(')
+        } else if (elem === ')') {
+            while (postfixStack.at(-1) !== '(') {
+                const num = postfixStack.pop();
+                postfixExpression.push(num as math);
+            }
+            postfixStack.pop();
+        } else {
+            while (stackElem = postfixStack.pop()) {
+                if (precedence(elem) <= precedence(stackElem)) {
+                    postfixExpression.push(stackElem);
+                }
+                else {
+                    postfixStack.push(stackElem);
+                    break;
+                }
+            }
+            postfixStack.push(elem);
+        }
+    }
+    while (stackElem = postfixStack.pop()) {
+        postfixExpression.push(stackElem)
+    }
+    console.log("Postfix: " + postfixExpression.toString());
+    return postfixExpression;
+}
+
+const equatePostfix = (expression: math[]) => {
+    const expressionStack: math[] = [];
+    let op;
+    while (op = expression.shift()) {
+        console.log("Evaluating: " + op);
+        if (typeof op === 'number') {
+            //console.log("Pushing Op");
+            expressionStack.push(op);
+        } else if (typeof op === 'string') {
+            const x = expressionStack.pop();
+            const y = expressionStack.pop();
+            //console.log("Against: " + x + " " + y);
+            const ans = calculate[op](x as number, y as number);
+            //console.log("As: " + ans);
+            expressionStack.push(ans);
+        } else console.log("Error in equatePostfix: unknown element = " + op);
+    }
+    const ans = expressionStack.pop();
+    return ans as string;
 }
 
 const convertMathToEquation = (equation: Equations[], iter: number = 0): [Equation, number] => {
     const newEquation = new Equation([null, null], '')
     const nums: number[] = [];
     const ops: string[] = [];
-
+    //Loop through array of numbers and strings (operators or parentheses)
     for (; iter < equation.length; iter++) {
         const elem = equation[iter];
         if (typeof elem === 'number') {
+            //if the element is a number, add the number 
             console.log("here1")
             newEquation.addToNums(elem);
         } else if (typeof elem === 'string') {
@@ -238,23 +325,29 @@ const convertMathToEquation = (equation: Equations[], iter: number = 0): [Equati
 let nextId: number = 0;
 
 const CalcButtons = () => {
-    const [disp, setDisp] = useState('')
-    const [values, setValues] = useState<number[]>([]);
+    const [disp, setDisp] = useState('');
+    const [history, setHistory] = useState<string[]>([]);
+    const [answers, setAnswers] = useState<string[]>([]);
     const [operation, setOperation] = useState('');
 
     function handleClick(op: string) {
         console.log("Calc button clicked: " + op)
         switch (op) {
             case '=':
-                let [equation, iter] = convertStrToMath(disp);
-                console.log("Equation: " + printEquation(equation));
-                console.log("Equate: " + Equate(equation))
-                setDisp(printEquation(equation) + " = " + Equate(equation));
+                setHistory([...history, disp]);
+                const expression = convertStrToMath(disp);
+                const postfix = convertInfixToPostfix(expression);
+                const answer = equatePostfix(postfix);
+                setAnswers([...answers, answer]);
+                setDisp(answer);
+                /* console.log("Equation: " + printEquation(equation));
+                console.log("Equate: " + Equate(equation)) */
+                //setDisp(printEquation(equation) + " = " + Equate(equation));
                 break;
             case 'clr':
                 setDisp('');
                 break;
-            default: setDisp(disp + op);
+            default: setDisp(disp +  op);
         }
     }
 
@@ -277,7 +370,15 @@ const CalcButtons = () => {
                 })}
                 </div>
             </div>
-            <div className="calcHistory">Calculator History</div>
+            <div className="calcHistory">
+                {history.map((elem, index) => {
+                    return (
+                        <div key={index}>
+                            <li className="calcHistoryList">{elem} = {answers[index]}</li>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     );
 };

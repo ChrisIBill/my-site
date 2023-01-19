@@ -5,7 +5,7 @@ body {
     padding: 0;
 }
 
-#Page {
+#page-wrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -14,6 +14,14 @@ body {
     margin: 0;
     background: rgb(255, 255, 255);
     background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(236, 186, 9, 1) 100%, rgba(0, 212, 255, 1) 100%);
+}
+
+#main-wrapper {
+    display: grid;
+    grid-template-areas: "sidebar content content";
+    grid-template-columns: minmax(60px, .5fr) 3fr;
+    height: 80%;
+    width: 100%;
 }
 
 .Sidebar {
@@ -39,8 +47,7 @@ main {
 }
 
 #sidebar {
-    width: 20%;
-    height: 80%;
+    grid-area: sidebar;
     color: blue;
     background-color: #f7f7f7;
     border: solid 2px black;
@@ -102,6 +109,7 @@ main {
 }
 
 #content {
+    grid-area: content;
     display: flex;
     justify-content: center;
     height: 79%;

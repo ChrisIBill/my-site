@@ -259,22 +259,23 @@ const CalcButtons = () => {
     }
 
     const Display = () => {
-        //const calcValue: number | undefined = calculate();
         return <div className="display">{disp}</div>;
     };
 
     return (
         <div className="calcContent">
-            {/* <div className="display"></div> */}
             <Display />
-            {calcButtons.map((button) => {
-                return (
-                    <div key={button.id} className="calcButtonContainer" /* style={{flexGrow: button.size}} */>
-                        {/* {item.icon} */}
-                        <button className="calcButton" onClick={() => handleClick(button.text)}>{button.text}</button>
-                    </div>
-                );
-            })}
+            <div className="calcButtonsWrapper">
+                {calcButtons.map((button) => {
+                    return (
+                        <div key={button.id} className="calcButtonContainer" /* style={{flexGrow: button.size}} */>
+                             {/* {item.icon} */}
+                            <button className="calcButton" onClick={() => handleClick(button.text)}><p>{button.text}</p></button>
+                        </div>
+                    );
+                })}
+            </div>
+            <div className="calcHistory"></div>
         </div>
     );
 };

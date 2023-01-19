@@ -9,10 +9,11 @@ export default function Home() {
         setOpen(!open);
     };
     return (
-        <div id="Page">
+        <div id="page-wrapper">
             <div id="header">Header</div>
-            <Sidebar />
-            {/* <div id={open ? "sidebar" : "sidebar:closed"}>
+            <div id="main-wrapper">
+                <Sidebar />
+                {/* <div id={open ? "sidebar" : "sidebar:closed"}>
         <nav>
           <button id="menuButton" onClick={menuButtonClick}></button>
           <ul>
@@ -28,8 +29,9 @@ export default function Home() {
           </ul>
         </nav>
       </div> */}
-            <div id="content">
-                <Outlet />
+                <div id="content">
+                    <Outlet />
+                </div>
             </div>
         </div>
     );

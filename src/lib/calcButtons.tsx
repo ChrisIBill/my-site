@@ -93,6 +93,6 @@ export const calcButtons = [
     {
         id: 17,
         text: 'clr',
-        size: 2,
+        size: 1,
     }
 ]

@@ -1,31 +1,43 @@
-.calcContent {
+
+
+.calcContainer {
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-areas:
-        "display history"
-        "button-wrapper history";
-    grid-template-columns: minmax(100px, 3fr) minmax(50px, 1fr);
+        "calc history";
+    grid-template-columns: minmax(100px, 3fr) minmax(50px, .8fr);
+    
+}
+
+.calcUnitContainer {
+    grid-area: calc;
+    display: grid;
+    grid-template-areas: 
+        "display"
+        "button-wrapper";
     grid-template-rows: 90px minmax(140px, 1fr);
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 .display {
     grid-area: display;
-    margin-bottom: 5px;
+    box-sizing: border-box;
+    border: 100px;
     color: black;
     background-color: white;
 }
 
 .calcButton {
     //display: flex;
-    width: 90%;
-    height: 90%;
-    flex-grow: 1;
+    width: 100%;
+    height: 100%;
     position: relative;
 
     p {
         margin: 0;
-        font-size: 100%;
+        font-size: 2vw;
         justify-content: center;
     }
 }
@@ -33,24 +45,46 @@
 .calcButtonsWrapper {
     display: flex;
     flex-wrap: wrap;
+    box-sizing: border-box;
+    /* display: grid;
+    grid-template-areas: 
+        "num num num basicOp"
+        "num num num basicOp"
+        "num num num basicOp"
+        "symbol symbol num basicOp"; */
     justify-content: center;
     height: 100%;
     width: 100%;
     grid-area: button-wrapper;
+    .num {
+        grid-area: span num;
+    }
+    .basicOp {
+        grid-area: span basicOp;
+    }
+    .symbols {
+        grid-area: span symbo;
+    }
+    .equalsKey {
+        width: 50%;
+        justify-content: left;
+    }
 }
-
 .calcButtonContainer {
+    //grid-area: span btn;
     box-sizing: border-box;
+    padding: 0.5%;
     display: flex;
     width: 25%;
-    height: 15%;
+    height: 20%;
 }
-
-.calcHistory {
+@media (min-width: 900px) {
+    .calcHistory {
     grid-area: history;
     box-sizing: border-box;
     margin-bottom: 15px;
     margin-left: 5px;
     background-color: green;
-    color: green;
+    color: blue;
+    }
 }

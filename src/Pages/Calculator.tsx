@@ -261,21 +261,23 @@ const CalcButtons = () => {
     const Display = () => {
         return <div className="display">{disp}</div>;
     };
-
+    const NumKeys = calcButtons.filter(button => button.type === 'num')
     return (
-        <div className="calcContent">
-            <Display />
-            <div className="calcButtonsWrapper">
+        <div className="calcContainer">
+            <div className="calcUnitContainer">
+                <Display />
+                <div className="calcButtonsWrapper">
                 {calcButtons.map((button) => {
                     return (
-                        <div key={button.id} className="calcButtonContainer" /* style={{flexGrow: button.size}} */>
+                        <div key={button.key} className={`calcButtonContainer ${button.type} ${button.key}`} /* style={{flexGrow: button.size}} */>
                              {/* {item.icon} */}
                             <button className="calcButton" onClick={() => handleClick(button.text)}><p>{button.text}</p></button>
                         </div>
                     );
                 })}
+                </div>
             </div>
-            <div className="calcHistory"></div>
+            <div className="calcHistory">Calculator History</div>
         </div>
     );
 };

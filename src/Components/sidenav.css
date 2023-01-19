@@ -30,6 +30,7 @@
 
 .sideitem:hover {
     background-color: #244f7d1c;
+    box-shadow: 2px 2px 5px black;
 }
 
 .menuButton {
@@ -42,3 +43,5 @@
     cursor: pointer;
     padding-left: 20px;
 }
+
+

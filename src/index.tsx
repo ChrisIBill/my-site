@@ -6,7 +6,6 @@ import { Router } from "./lib/pagesData"
 import Root from "./Pages/Root";
 import ErrorPage from "./Pages/ErrorPage"
 import Contact from "./Pages/Contact";
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 /* const router = createBrowserRouter([

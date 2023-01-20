@@ -4,15 +4,18 @@ import { Outlet, Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function Home() {
-    const [open, setOpen] = useState(true);
-    const menuButtonClick = () => {
-        setOpen(!open);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const sidebarButtonClick = () => {
+        setSidebarOpen(!sidebarOpen);
     };
     return (
         <div id="page-wrapper">
             <div id="header">Header</div>
             <div id="main-wrapper">
-                <Sidebar />
+                <Sidebar
+                    isOpen={sidebarOpen}
+                    toggleSidebar={sidebarButtonClick}
+                />
                 {/* <div id={open ? "sidebar" : "sidebar:closed"}>
         <nav>
           <button id="menuButton" onClick={menuButtonClick}></button>

@@ -1,5 +1,3 @@
-
-
 .calcContainer {
     width: 100%;
     height: 100%;
@@ -7,13 +5,13 @@
     grid-template-areas:
         "calc history";
     grid-template-columns: minmax(100px, 3fr) minmax(50px, .8fr);
-    
+
 }
 
 .calcUnitContainer {
     grid-area: calc;
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
         "display"
         "button-wrapper";
     grid-template-rows: 90px minmax(140px, 1fr);
@@ -42,6 +40,10 @@
     }
 }
 
+.calcButton:hover {
+    cursor: pointer;
+}
+
 .calcButtonsWrapper {
     display: flex;
     flex-wrap: wrap;
@@ -56,20 +58,25 @@
     height: 100%;
     width: 100%;
     grid-area: button-wrapper;
+
     .num {
         grid-area: span num;
     }
+
     .basicOp {
         grid-area: span basicOp;
     }
+
     .symbols {
         grid-area: span symbo;
     }
+
     .equalsKey {
         width: 50%;
         justify-content: left;
     }
 }
+
 .calcButtonContainer {
     //grid-area: span btn;
     box-sizing: border-box;
@@ -78,13 +85,28 @@
     width: 25%;
     height: 20%;
 }
+
 @media (min-width: 900px) {
     .calcHistory {
-    grid-area: history;
-    box-sizing: border-box;
-    margin-bottom: 15px;
-    margin-left: 5px;
-    background-color: green;
-    color: blue;
+        grid-area: history;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+        margin-left: 5px;
+        background-color: rgb(135, 206, 235);
+        color: blue;
+    }
+}
+
+.calcHistory {
+    li {
+        box-sizing: border-box;
+        border: 1px solid black;
+        list-style: none;
+        color: white;
+    }
+
+    li:hover {
+        cursor: pointer;
+        background-color: rgb(170, 223, 244);
     }
 }

@@ -2,6 +2,7 @@ import "./calculator.scss";
 import { calcButtons } from "../lib/calcButtons";
 import { useState } from "react";
 import { isNumberObject } from "util/types";
+import { execPath } from "process";
 type Operand = (number | Equation) | null;
 type Operands = [Operand, Operand];
 type math = string | number;
@@ -113,7 +114,7 @@ const calculate: { [key: string]: (x: number, y: number) => number } = {
     '-': (x, y) => x - y
 };
 
-const precedence = (op: string) =>{
+const precedence = (op: string) => {
     switch (op) {
         case '^':
             return 3;
@@ -205,6 +206,11 @@ const equatePostfix = (expression: math[]) => {
             //console.log("As: " + ans);
             expressionStack.push(ans);
         } else console.log("Error in equatePostfix: unknown element = " + op);
+    }
+    while (expressionStack.length > 1) {
+        const x = expressionStack.pop();
+        const y = expressionStack.pop();
+        expressionStack.push(Number(x) * Number(y));
     }
     const ans = expressionStack.pop();
     return ans as string;
@@ -347,10 +353,13 @@ const CalcButtons = () => {
             case 'clr':
                 setDisp('');
                 break;
-            default: setDisp(disp +  op);
+            default: setDisp(disp + op);
         }
     }
 
+    function handleHistoryClick(hist: string) {
+        setDisp(disp + '(' + hist + ')')
+    }
     const Display = () => {
         return <div className="display">{disp}</div>;
     };
@@ -360,21 +369,21 @@ const CalcButtons = () => {
             <div className="calcUnitContainer">
                 <Display />
                 <div className="calcButtonsWrapper">
-                {calcButtons.map((button) => {
-                    return (
-                        <div key={button.key} className={`calcButtonContainer ${button.type} ${button.key}`} /* style={{flexGrow: button.size}} */>
-                             {/* {item.icon} */}
-                            <button className="calcButton" onClick={() => handleClick(button.text)}><p>{button.text}</p></button>
-                        </div>
-                    );
-                })}
+                    {calcButtons.map((button) => {
+                        return (
+                            <div key={button.key} className={`calcButtonContainer ${button.type} ${button.key}`} /* style={{flexGrow: button.size}} */>
+                                {/* {item.icon} */}
+                                <button className="calcButton" onClick={() => handleClick(button.text)}><p>{button.text}</p></button>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             <div className="calcHistory">
                 {history.map((elem, index) => {
                     return (
                         <div key={index}>
-                            <li className="calcHistoryList">{elem} = {answers[index]}</li>
+                            <li className="calcHistoryList" onClick={() => handleHistoryClick(answers[index])}>{elem} = {answers[index]}</li>
                         </div>
                     )
                 })}

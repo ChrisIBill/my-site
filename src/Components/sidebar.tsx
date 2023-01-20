@@ -1,7 +1,7 @@
 import { Link, Route, Routes } from "react-router-dom";
 import { navData } from "../lib/pagesData";
 import { Router } from "../lib/pagesData";
-import "./sidenav.css";
+import "./sidebar.scss";
 
 export default function Sidebar() {
   const pages = Router.routes;

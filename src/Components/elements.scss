@@ -1,0 +1,29 @@
+@use '../lib/siteColors';
+
+.calcDisplay {
+    grid-area: display;
+    box-sizing: border-box;
+    border: 100px;
+    color: black;
+    background-color: white;
+}
+
+.menuBtn {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    .btnArtLines {
+            height: .3em;
+            width: 2.3em;
+            border-radius: 15%;
+            margin: .15em;
+            color: white;
+            background-color: #101011;
+        }
+}
+.menuBtn:hover {
+    cursor: pointer;
+}

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, } from 'react-router-dom';
 import './index.scss';
 import { Router } from "./lib/pagesData"
-import Root from "./Pages/Root";
 import ErrorPage from "./Pages/ErrorPage"
 import Contact from "./Pages/Contact";
 import reportWebVitals from './reportWebVitals';
@@ -25,6 +24,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <script src="path/to/dist/feather.js"></script>
     <RouterProvider router={Router} />
   </React.StrictMode>
 );

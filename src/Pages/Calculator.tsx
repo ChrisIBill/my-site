@@ -3,6 +3,7 @@ import { calcButtons } from "../lib/calcButtons";
 import { useState } from "react";
 import { isNumberObject } from "util/types";
 import { execPath } from "process";
+import { Display } from "../Components/calcDisplay"
 type Operand = (number | Equation) | null;
 type Operands = [Operand, Operand];
 type math = string | number;
@@ -109,7 +110,7 @@ const printEquation = (eq: Equation): string => {
 
 const calculate: { [key: string]: (x: number, y: number) => number } = {
     '*': (x, y) => x * y,
-    '/': (x, y) => x / y,
+    '/': (x, y) => y / x,
     '+': (x, y) => x + y,
     '-': (x, y) => x - y
 };
@@ -196,14 +197,11 @@ const equatePostfix = (expression: math[]) => {
     while (op = expression.shift()) {
         console.log("Evaluating: " + op);
         if (typeof op === 'number') {
-            //console.log("Pushing Op");
             expressionStack.push(op);
         } else if (typeof op === 'string') {
             const x = expressionStack.pop();
             const y = expressionStack.pop();
-            //console.log("Against: " + x + " " + y);
             const ans = calculate[op](x as number, y as number);
-            //console.log("As: " + ans);
             expressionStack.push(ans);
         } else console.log("Error in equatePostfix: unknown element = " + op);
     }
@@ -240,93 +238,7 @@ const convertMathToEquation = (equation: Equations[], iter: number = 0): [Equati
         }
     }
     return [newEquation, iter];
-    /* equation.forEach((elem, index) => {
-        if (typeof elem === 'number') {
-            newEquation.addToNums(elem);
-        } else if (typeof elem === 'string') {
-            if (elem === '(') {
-                let [parenth, i] = convertMathToEquation(equation.slice(index))
-            }
-            ops.push(elem);
-        }
-    }) */
-
-    /* while (ops) {
-        ops.indexOf('/')
-        ops.indexOf('+')
-        ops.indexOf('-')
-        if(ops.indexOf('*'))
-    } */
 }
-
-/* const parseDisp = (str: math[], iter: number = 0): [(Equations)[], number] => {
-    //
-    //const equation2: Array<math> = [];
-    let equation: (Equations)[] = [];
-    const newEquations: (Equations)[] = [];
-    for (; iter < str.length; iter++) {
-        const char: math = str[iter];
-        const prevStr: number = Number(str[iter - 1]);
-        console.log("Current Char in parse: " + char);
-        const num: number = Number(char);
-        if (isNaN(num)) {
-            console.log('length: ' + str.length);
-            if (char === '(') {
-                let [parenth, i] = parseDisp(str.slice(iter + 1))
-                
-                console.log("Parenth: " + parenth);
-                const k: math[] = parenth as math[];
-                equation = equation.concat([k]);
-                iter += i;
-                console.log("here");
-                console.log(equation);
-            } else if (char === ')') {
-                return [equation, iter+1];
-            }
-            else equation.push(char);
-        } else if (num) {
-            if (isNaN(prevStr)) {
-                equation.push(num);
-            } else {
-                const prev: number = equation.pop() as number;
-                equation.push((prev * 10) + num);
-            }
-            
-        }
-    }
-    console.log(equation);
-    return [equation, iter];
-} */
-
-/* const calcEquations = (equation: Equations[]) => {
-    const nums: number[] = [];
-    const ops: string[] = [];
-    let calc = new Equation([null, null], '');
-    for (let i = 0; i < equation.length; i++) {
-        //console.log(equation[i]);
-        let cur = equation[i]
-        if ((typeof cur) === 'string') {
-            console.log("string");
-        } else if ((typeof cur) === 'number') {
-            console.log("number")
-        } else calcEquation(equation[i] as math[]);
-    }
-
-    equation.forEach((elem, index) => {
-        if (typeof elem === 'object') {
-            
-        }
-        if (typeof elem === 'number') {
-            if (!calc.num1) {
-                calc.num1 = elem;
-            } else if (!calc.num2) {
-                calc.num2 = elem;
-            }
-        } else if (typeof elem === 'string') {
-            ops.push(elem);
-        }
-    })
-} */
 
 let nextId: number = 0;
 
@@ -360,14 +272,15 @@ const CalcButtons = () => {
     function handleHistoryClick(hist: string) {
         setDisp(disp + '(' + hist + ')')
     }
-    const Display = () => {
-        return <div className="display">{disp}</div>;
+    const SetDisplay = () => {
+        return Display(disp);
     };
+    const ActiveDisplay = Display(disp);
     const NumKeys = calcButtons.filter(button => button.type === 'num')
     return (
         <div className="calcContainer">
             <div className="calcUnitContainer">
-                <Display />
+                <SetDisplay />
                 <div className="calcButtonsWrapper">
                     {calcButtons.map((button) => {
                         return (

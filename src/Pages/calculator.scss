@@ -1,6 +1,8 @@
 .calcContainer {
+    box-sizing: border-box;
+    margin-top: 2em;
     width: 100%;
-    height: 100%;
+    height: 90%;
     display: grid;
     grid-template-areas:
         "calc history";

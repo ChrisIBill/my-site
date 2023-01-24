@@ -2,9 +2,10 @@
 
 .sidebar {
     grid-area: sidebar;
-    height: 90%;
-    background-color: siteColors.$sidebarBackground;
-    border-radius: 0px 40px 40px 0px;
+    height: 100%;
+    background-color: siteColors.$mainColor;
+    border-right: 2px solid siteColors.$sidebarBackground;
+    //border-radius: 0px 40px 40px 0px;
     //box-shadow: inset 0px 0px 5px 5px #201E21;
     
     //border: solid 2px black;
@@ -14,11 +15,10 @@
     
     justify-content: stretch;
     align-items: stretch; */
-    .btnWrapper {
+    /* .btnWrapper {
         display: flex;
         flex-direction: row-reverse;
         position: relative;
-        top: 20px;
     }
     ul {
         height: 100%;
@@ -57,20 +57,58 @@
     nav {
         display: flex;
         flex-direction: column;
-    }
+    } */
 }
 
 .sidebar--closed {
+    grid-area: sidebar;
     width: 3rem;
+    border-right: 2px solid siteColors.$sidebarBackground;
+    display: flex;
+    flex-direction: column;
 }
 
-.sideitem {
+/* Sidebar elements */
+.btnWrapper {
     display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    cursor: pointer;
-    color: #b2bac2;
+    flex-direction: row-reverse;
+    position: relative;
+}
+
+ul {
+    height: 100%;
+    flex-direction: column;
+    display: flex;
+    //align-content: space-around;
+    justify-content: space-around;
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+a {
     text-decoration: none;
+    display: flex;
+    justify-self: stretch;
+    font-style: oblique;
+    height: 3rem;
+    border-top: solid thin black;
+    border-bottom: solid thin black;
+    margin-bottom: 1rem;
+    background-color: rgba(231, 170, 120, 0);
+}
+
+a:link,
+a:visited {
+    color: black;
+    font-size: 1.2rem;
+}
+
+a:hover {
+    background-color: siteColors.$mainColorHighlight
+}
+
+.active {
+    background-color: siteColors.$mainColorHighlight
 }
 
 .linkText {
@@ -79,23 +117,6 @@
 
 .linkText:closed {
     visibility: hidden;
-}
-
-.sideitem:hover {
-    background-color: #244f7d1c;
-    box-shadow: 2px 2px 5px black;
-}
-
-.menuButton {
-    align-self: center;
-    align-self: flex-start;
-    justify-self: flex-end;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding-left: 20px;
-
-    
 }
 
 

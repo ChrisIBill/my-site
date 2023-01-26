@@ -39,7 +39,6 @@ export default function Sidebar() {
         className="btnWrapper"
         onClick={() => {
           setIsOpen(!isOpen);
-          console.log("click3");
         }}
       >
         <MenuBtn />
@@ -48,7 +47,10 @@ export default function Sidebar() {
         {resources?.map((elem) => {
           return (
             <li key={elem.id}>
-              <NavLink to={elem.path}>{elem.id}</NavLink>
+              <NavLink to={elem.path}>
+                {isOpen ? elem.text : ""}
+                {elem.icon}
+              </NavLink>
             </li>
           );
         })}

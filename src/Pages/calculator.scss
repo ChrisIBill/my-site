@@ -1,3 +1,5 @@
+@use '../lib/siteColors';
+
 .calcContainer {
     box-sizing: border-box;
     margin-top: 2em;
@@ -20,36 +22,25 @@
     padding-left: 10%;
     padding-right: 10%;
 }
-
-/* .display {
+.calcDisplay {
     grid-area: display;
     box-sizing: border-box;
     border: 100px;
     color: black;
     background-color: white;
-} */
-
-.calcButton {
-    //display: flex;
-    width: 100%;
-    height: 100%;
-    position: relative;
-
-    p {
-        margin: 0;
-        font-size: 2vw;
-        justify-content: center;
-    }
 }
+
+
 
 .calcButton:hover {
     cursor: pointer;
+    
 }
 
 .calcButtonsWrapper {
     display: flex;
     flex-wrap: wrap;
-    box-sizing: border-box;
+    flex-basis: 70%;
     /* display: grid;
     grid-template-areas: 
         "num num num basicOp"
@@ -57,9 +48,25 @@
         "num num num basicOp"
         "symbol symbol num basicOp"; */
     justify-content: center;
-    height: 100%;
-    width: 100%;
-    grid-area: button-wrapper;
+    height: fit-content;
+    width: fit-content;
+
+    .calcButton {
+            //display: flex;
+            box-sizing: border-box;
+            flex-basis: 20.5%;
+            min-width: 3rem;
+            min-height: 3rem;
+            height: 20%;
+            position: relative;
+            margin: 1.5%;
+            //border: 1em solid siteColors.$mainColor;
+            p {
+                margin: 0;
+                font-size: 2vw;
+                justify-content: center;
+            }
+        }
 
     .num {
         grid-area: span num;

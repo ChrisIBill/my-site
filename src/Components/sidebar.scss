@@ -3,65 +3,15 @@
 .sidebar {
     grid-area: sidebar;
     height: 100%;
+    //width: 12rem;
+    //width: fit-content;
     background-color: siteColors.$mainColor;
     border-right: 2px solid siteColors.$sidebarBackground;
-    //border-radius: 0px 40px 40px 0px;
-    //box-shadow: inset 0px 0px 5px 5px #201E21;
-    
-    //border: solid 2px black;
     display: flex;
     flex-direction: column;
-    /* 
-    
-    justify-content: stretch;
-    align-items: stretch; */
-    /* .btnWrapper {
-        display: flex;
-        flex-direction: row-reverse;
-        position: relative;
-    }
-    ul {
-        height: 100%;
-        flex-direction: column;
-        display: flex;
-        //align-content: space-around;
-        justify-content: space-around;
-        list-style-type: none;
-        padding-left: 0px;
-    }
-
-    a {
-        text-decoration: none;
-        display: flex;
-        justify-self: stretch;
-        font-style: oblique;
-        height: 3rem;
-        border-top: solid thin black;
-        border-bottom: solid thin black;
-        margin-bottom: 1rem;
-        background-color: rgba(231, 170, 120, 0);
-    }
-
-    a:link,
-    a:visited {
-        color: black;
-        font-size: 1.2rem;
-    }
-
-    a:hover {
-        //background-color: rgba();
-    }
-    a:active {
-
-    }
-    nav {
-        display: flex;
-        flex-direction: column;
-    } */
 }
 
 .sidebar--closed {
-    grid-area: sidebar;
     width: 3rem;
     border-right: 2px solid siteColors.$sidebarBackground;
     display: flex;
@@ -89,12 +39,24 @@ a {
     text-decoration: none;
     display: flex;
     justify-self: stretch;
+    justify-content: space-between;
+    align-items: center;
     font-style: oblique;
     height: 3rem;
-    border-top: solid thin black;
-    border-bottom: solid thin black;
+    //border-top: solid thin black;
+    //border-bottom: solid thin black;
     margin-bottom: 1rem;
     background-color: rgba(231, 170, 120, 0);
+    .sidebarLinkText {
+        display: inline-block;
+        margin-left: 1em;
+        margin-right: 1em;
+        height: fit-content;
+    }
+    .sidebarIcon {
+        height: 100%;
+        width: 3rem;
+    }
 }
 
 a:link,

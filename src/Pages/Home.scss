@@ -20,9 +20,9 @@ body {
 }
 
 #main-wrapper {
-    display: grid;
-    grid-template-areas: "sidebar content content";
-    grid-template-columns: minmax(60px, .4fr) 3fr;
+    display: flex;
+    //grid-template-areas: "sidebar content content";
+    //grid-template-columns: minmax(60px, .4fr) 3fr;
     height: 80%;
     width: 100%;
 }

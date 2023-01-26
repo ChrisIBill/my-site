@@ -195,7 +195,7 @@ const CalcButtons = () => {
   };
 
   return (
-    <Container className="calcContainer">
+    <div className="calcContainer">
       <div className="calcUnitContainer">
         <Paper className="calcDisplay" elevation={1}>
           <ThemeProvider theme={calcDispTheme}>
@@ -231,7 +231,7 @@ const CalcButtons = () => {
           );
         })}
       </div>
-    </Container>
+    </div>
   );
 };
 

@@ -1,4 +1,7 @@
+@use '../lib/siteColors';
+
 p {
+    color: siteColors.$textColor;
     text-indent: 4em;
     margin-left: 2em;
 }

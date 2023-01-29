@@ -9,7 +9,7 @@
 }
 
 .menuBtn {
-    background-color: rgba(0, 0, 0, 0);
+    background-color: siteColors.$mainColor;
     border: none;
     display: flex;
     flex-direction: column;
@@ -21,7 +21,7 @@
             border-radius: 15%;
             margin: .15em;
             color: white;
-            background-color: #101011;
+            background-color: siteColors.$textColor;
         }
 }
 .menuBtn:hover {

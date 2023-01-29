@@ -23,6 +23,7 @@
     display: flex;
     flex-direction: row-reverse;
     position: relative;
+    color: siteColors.$textColor;
 }
 
 ul {
@@ -46,6 +47,7 @@ a {
     //border-top: solid thin black;
     //border-bottom: solid thin black;
     margin-bottom: 1rem;
+    color: siteColors.$textColor;
     background-color: rgba(231, 170, 120, 0);
     .sidebarLinkText {
         display: inline-block;
@@ -61,7 +63,6 @@ a {
 
 a:link,
 a:visited {
-    color: black;
     font-size: 1.2rem;
 }
 

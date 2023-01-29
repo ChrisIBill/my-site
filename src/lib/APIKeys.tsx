@@ -1,0 +1,3 @@
+const OPENWEATHERKEY = "2abc80633438e5beae0562a46b1716da";
+
+export { OPENWEATHERKEY };
